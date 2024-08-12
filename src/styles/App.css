@@ -1,0 +1,17 @@
+.heading {
+  text-align: center;
+  padding: 50px 0;
+  background: white;
+}
+
+body {
+  background: #fff3dd;
+}
+
+
+@media screen and (max-width: 500px) {
+  .heading {
+    font-size: 13px;
+    padding: 42px 0;
+  }
+}
