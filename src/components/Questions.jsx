@@ -5,22 +5,25 @@ import createDocx from "./generator/createDocx";
 import { saveAs } from "file-saver";
 import { Packer } from "docx";
 import Alert from "@mui/material/Alert";
-import { Grow, Box } from "@mui/material";
+import { Grow, Box, Modal } from "@mui/material";
+import { Textarea, IconButton } from "@mui/joy";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { Button } from "@mui/joy";
 
 const Questions = () => {
-  const [examDetails, setExamDetails] = useState({
-    term: "",
-    studyingClass: "",
-    subject: "",
-  });
-
   const [questions, setQuestions] = useState([]);
-
+  const [openModal, setOpenModal] = useState(false);
   const [alert, setAlert] = useState({
     show: false,
     message: "",
     type: "",
   });
+  const [examDetails, setExamDetails] = useState({
+    term: "",
+    studyingClass: "",
+    subject: "",
+  });
+  const [exportJSON, setExportJSON] = useState("");
 
   const load = () => {
     const qstorage = localStorage.getItem("questions");
@@ -226,7 +229,30 @@ const Questions = () => {
       studyingClass: "",
       subject: "",
     });
-    alert("Cleared");
+    showAlert("Cleared", "info", 2000);
+  };
+
+  const handleModalOpen = () => {
+    setExportJSON(JSON.stringify({ questions, examDetails }, null, 4));
+    setOpenModal(true);
+  };
+
+  const handleModalClose = () => {
+    setExportJSON("");
+    setOpenModal(false);
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(exportJSON);
+    showAlert("Copied", "info", 2000);
+  };
+
+  const handleUpdate = () => {
+    const { questions, examDetails } = JSON.parse(exportJSON);
+    setQuestions(questions);
+    setExamDetails(examDetails);
+    handleModalClose();
+    showAlert("Updated", "info", 2000);
   };
 
   return (
@@ -278,19 +304,64 @@ const Questions = () => {
             ))}
         </div>
         <div className="add-question">
-          {/* <button className="question-option alt-bg" onClick={exportData}>
-            Export Data
-          </button> */}
-          <button className="question-option alt-bg" onClick={clear}>
+          <button className="question-option" onClick={handleModalOpen}>
+            Import/Export Data
+          </button>
+          <button className="question-option" onClick={clear}>
             Clear
           </button>
-          <button className="question-option alt-bg" onClick={addQuestion}>
+          <button className="question-option" onClick={addQuestion}>
             Add Question
           </button>
-          <button className="question-option alt-bg" onClick={generateDocs}>
+          <button className="question-option" onClick={generateDocs}>
             Generate Docs
           </button>
         </div>
+        <Modal
+          open={openModal}
+          onClose={handleModalClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          className="modal-outer"
+        >
+          <Box className="box-modal">
+            <Textarea
+              name="Plain"
+              value={exportJSON}
+              onChange={(e) => setExportJSON(e.target.value)}
+              variant="plain"
+              minRows={5}
+              maxRows={20}
+              startDecorator={
+                <Box
+                  sx={{
+                    position: "absolute",
+                    right: "35px",
+                    top: "35px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                  }}
+                >
+                  <IconButton
+                    variant="outlined"
+                    color="neutral"
+                    onClick={handleCopy}
+                  >
+                    <ContentCopyIcon sx={{ fontSize: "15px" }} />
+                  </IconButton>
+                  <Button
+                    variant="outlined"
+                    color="neutral"
+                    onClick={handleUpdate}
+                  >
+                    Update
+                  </Button>
+                </Box>
+              }
+            />
+          </Box>
+        </Modal>
       </div>
       <div className="alert">
         <Box sx={{ display: alert.show ? "flex" : "none" }}>
