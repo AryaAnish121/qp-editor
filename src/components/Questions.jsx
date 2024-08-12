@@ -22,9 +22,26 @@ const Questions = () => {
     type: "",
   });
 
+  const load = () => {
+    const qstorage = localStorage.getItem("questions");
+    const esstorage = localStorage.getItem("examDetails");
+
+    if (qstorage) setQuestions(JSON.parse(qstorage));
+    if (esstorage) setExamDetails(JSON.parse(esstorage));
+  };
+
+  useEffect(load, []);
+
   useEffect(() => {
-    load();
-  }, []);
+    let rotationInterval = setInterval(() => {
+      localStorage.setItem("questions", JSON.stringify(questions));
+      localStorage.setItem("examDetails", JSON.stringify(examDetails));
+    }, 1000);
+
+    return () => {
+      clearInterval(rotationInterval);
+    };
+  }, [questions, examDetails]);
 
   const showAlert = (message, type, time) => {
     setAlert({ message, type, show: true });
@@ -200,20 +217,6 @@ const Questions = () => {
     }
   };
 
-  const save = () => {
-    localStorage.setItem("questions", JSON.stringify(questions));
-    localStorage.setItem("examDetails", JSON.stringify(examDetails));
-    alert("Saved");
-  };
-
-  const load = () => {
-    const qstorage = localStorage.getItem("questions");
-    const esstorage = localStorage.getItem("examDetails");
-    if (qstorage) setQuestions(JSON.parse(qstorage));
-
-    if (esstorage) setExamDetails(JSON.parse(esstorage));
-  };
-
   const clear = () => {
     if (window.confirm("Are you sure?") === false) return;
     localStorage.clear();
@@ -275,12 +278,6 @@ const Questions = () => {
             ))}
         </div>
         <div className="add-question">
-          <button className="question-option alt-bg" onClick={load}>
-            Load Last Save
-          </button>
-          <button className="question-option alt-bg" onClick={save}>
-            Save Paper
-          </button>
           {/* <button className="question-option alt-bg" onClick={exportData}>
             Export Data
           </button> */}

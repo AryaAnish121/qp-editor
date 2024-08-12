@@ -1,10 +1,9 @@
 import "../styles/App.css";
 import Questions from "./Questions";
 
-// TODO: ADD AUTOSAVE
-// TODO: ADD ICON META TAGS
 // TODO: ADD HOTKEYS
 // TODO: ADD EXPORT/IMPORT QUESTION AND DATA
+// TODO: MAKE MARKS AND QUESTION INLINE IF POSSIBLE
 
 function App() {
   return (
