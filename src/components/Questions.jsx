@@ -5,10 +5,11 @@ import createDocx from "./generator/createDocx";
 import { saveAs } from "file-saver";
 import { Packer } from "docx";
 import Alert from "@mui/material/Alert";
-import { Grow, Box, Modal } from "@mui/material";
+import { Box, Modal } from "@mui/material";
 import { Textarea, IconButton } from "@mui/joy";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Button } from "@mui/joy";
+import Snackbar from "@mui/material/Snackbar";
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
@@ -46,16 +47,16 @@ const Questions = () => {
     };
   }, [questions, examDetails]);
 
-  const showAlert = (message, type, time) => {
+  const showSnackbar = (message, type, time) => {
     setAlert({ message, type, show: true });
+  };
 
-    setTimeout(() => {
-      setAlert({
-        message: "",
-        type: "",
-        show: false,
-      });
-    }, time);
+  const closeSnackbar = () => {
+    setAlert({
+      show: false,
+      message: "",
+      type: "",
+    });
   };
 
   const handleUp = (qid) => {
@@ -211,12 +212,12 @@ const Questions = () => {
 
   const generateDocs = async () => {
     try {
-      showAlert("Generating Document", "info", 2000);
+      showSnackbar("Generating Document", "info", 2000);
       const doc = createDocx(questions, examDetails);
       const blob = await Packer.toBlob(doc);
       saveAs(blob, `${examDetails.studyingClass}-${examDetails.subject}.docx`);
     } catch (error) {
-      showAlert(error.message, "error", 2000);
+      showSnackbar(error.message, "error", 2000);
     }
   };
 
@@ -229,7 +230,7 @@ const Questions = () => {
       studyingClass: "",
       subject: "",
     });
-    showAlert("Cleared", "info", 2000);
+    showSnackbar("Cleared", "info", 2000);
   };
 
   const handleModalOpen = () => {
@@ -244,7 +245,7 @@ const Questions = () => {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(exportJSON);
-    showAlert("Copied", "info", 2000);
+    showSnackbar("Copied", "info", 2000);
   };
 
   const handleUpdate = () => {
@@ -252,7 +253,7 @@ const Questions = () => {
     setQuestions(questions);
     setExamDetails(examDetails);
     handleModalClose();
-    showAlert("Updated", "info", 2000);
+    showSnackbar("Updated", "info", 2000);
   };
 
   return (
@@ -363,13 +364,21 @@ const Questions = () => {
           </Box>
         </Modal>
       </div>
-      <div className="alert">
-        <Box sx={{ display: alert.show ? "flex" : "none" }}>
-          <Grow in={alert.show}>
-            <Alert severity={alert.type}>{alert.message}</Alert>
-          </Grow>
-        </Box>
-      </div>
+      <Snackbar
+        open={alert.show}
+        autoHideDuration={2000}
+        onClose={closeSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert
+          onClose={closeSnackbar}
+          severity={alert.type}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {alert.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

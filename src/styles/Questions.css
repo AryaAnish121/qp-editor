@@ -97,13 +97,7 @@
 
 @media screen and (max-width: 429px) {
   .add-question .question-option {
-    margin-right: 75px !important;
+    margin-right: 15px !important;
     margin-bottom: 10px !important;
-  }
-
-  .add-question .question-option:nth-child(2),
-  .add-question .question-option:nth-child(4),
-  .add-question .question-option:nth-child(6) {
-    margin-right: 0 !important;
   }
 }

@@ -5,11 +5,12 @@ import {
   LevelFormat,
   AlignmentType,
   convertInchesToTwip,
+  TabStopPosition,
+  TabStopType,
 } from "docx";
 
 const createDocx = (data, { studyingClass, subject, term }) => {
   const questions = data.flatMap((question) => {
-    const markSpaces = " ".repeat(118 - question.title.length * 1.4 - 4);
     const options =
       question.type === "mcq/fitb/mqna/mtf"
         ? question.options.map((option) => {
@@ -37,6 +38,12 @@ const createDocx = (data, { studyingClass, subject, term }) => {
         : [];
     return [
       new Paragraph({
+        tabStops: [
+          {
+            type: TabStopType.RIGHT,
+            position: TabStopPosition.MAX,
+          },
+        ],
         style: "questionStyle",
         numbering: {
           level: 0,
@@ -44,7 +51,11 @@ const createDocx = (data, { studyingClass, subject, term }) => {
         },
         children: [
           new TextRun({
-            text: `${question.title} ${markSpaces} (${question.marks})`,
+            text: `${question.title}`,
+            bold: true,
+          }),
+          new TextRun({
+            text: `\t(${question.marks})`,
             bold: true,
           }),
           ...dashes,
@@ -243,6 +254,7 @@ const createDocx = (data, { studyingClass, subject, term }) => {
       ],
     },
   });
+
   return doc;
 };
 
