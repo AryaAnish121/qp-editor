@@ -1,16 +1,11 @@
-import { useState } from "react";
-
-const MCQOption = ({ value, ind, handleOptionChange, handleHotKey }) => {
-  const [editable, setEditable] = useState(false);
-
-  const handleClick = () => {
-    setEditable(true);
-  };
-
-  const handleBlur = () => {
-    setEditable(false);
-  };
-
+const MCQOption = ({
+  value,
+  ind,
+  handleOptionChange,
+  handleHotKey,
+  handleOptionFocus,
+  optRef,
+}) => {
   const handleChange = ({ target: { value: newValue } }) => {
     handleOptionChange(ind, newValue);
   };
@@ -26,18 +21,15 @@ const MCQOption = ({ value, ind, handleOptionChange, handleHotKey }) => {
   };
 
   return (
-    <p onClick={handleClick}>
-      {editable ? (
-        <input
-          onBlur={handleBlur}
-          onChange={handleChange}
-          value={value}
-          onKeyDown={handleKeyDown}
-        />
-      ) : (
-        value
-      )}
-    </p>
+    <input
+      onChange={handleChange}
+      value={value}
+      onKeyDown={handleKeyDown}
+      ref={optRef}
+      onFocus={() => {
+        handleOptionFocus(ind);
+      }}
+    />
   );
 };
 

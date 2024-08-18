@@ -1,8 +1,6 @@
 import "../styles/App.css";
 import Questions from "./Questions";
 
-// TODO: ADD HOTKEYS
-
 function App() {
   return (
     <div className="App">

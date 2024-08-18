@@ -19,6 +19,10 @@ const Question = ({
   handleHotKey,
   handleUp,
   handleDown,
+  innerRef,
+  innerRefOpt,
+  handleQuestionFocus,
+  handleOptionFocus,
 }) => {
   const [disabled, setDisabled] = useState(true);
 
@@ -32,6 +36,9 @@ const Question = ({
 
   return (
     <div
+      onFocus={() => {
+        handleQuestionFocus(ind);
+      }}
       className="question"
       onMouseEnter={handleHoverChange}
       onMouseLeave={handleHoverChange}
@@ -44,12 +51,14 @@ const Question = ({
           name="title"
           value={title}
           onChange={handleChange}
+          ref={innerRef}
         />
         <div className="question-options">
           <button
             disabled={disabled}
             className="delete-button question-option re-arrange-options"
             onClick={() => handleUp(ind)}
+            tabIndex={-1}
           >
             <Up />
           </button>
@@ -57,16 +66,19 @@ const Question = ({
             disabled={disabled}
             className="delete-button question-option re-arrange-options"
             onClick={() => handleDown(ind)}
+            tabIndex={-1}
           >
             <Down />
           </button>
           <button
             className="delete-button question-option"
             onClick={() => handleDeleteQuestion(ind)}
+            tabIndex={-1}
           >
             <Cross />
           </button>
           <select
+            tabIndex={-1}
             name="type"
             className="question-option"
             value={type}
@@ -98,13 +110,20 @@ const Question = ({
                 handleOptionChange={(oid, newValue) => {
                   handleOptionChange(ind, oid, newValue);
                 }}
+                handleOptionFocus={(oid) => {
+                  handleOptionFocus(ind, oid);
+                }}
                 handleHotKey={(oid, hotKey) => {
                   handleHotKey(ind, oid, hotKey);
+                }}
+                optRef={(el) => {
+                  innerRefOpt(el, index);
                 }}
               />
               <button
                 className="delete-button"
                 onClick={() => handleDeleteOption(ind, index)}
+                tabIndex={-1}
               >
                 <Cross />
               </button>
@@ -112,6 +131,7 @@ const Question = ({
           ))}
           <li>
             <button
+              tabIndex={-1}
               onClick={() => {
                 handleNewOption(ind);
               }}
