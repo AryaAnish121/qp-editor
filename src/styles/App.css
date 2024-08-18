@@ -11,7 +11,7 @@ body {
 
 @media screen and (max-width: 500px) {
   .heading {
-    font-size: 13px;
+    font-size: 12px;
     padding: 42px 0;
   }
 }
