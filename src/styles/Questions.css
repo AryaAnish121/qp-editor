@@ -98,13 +98,10 @@
 }
 
 .bottom-buttons .question-option {
-  margin: 0 15px;
-}
-
-.bottom-buttons .question-option {
   background: rgb(250, 250, 250);
   cursor: pointer;
   width: 150px;
+  margin-left: 15px;
 }
 
 kbd {
@@ -144,6 +141,9 @@ kbd {
   .add-question .question-option:nth-last-child(1),
   .add-question .question-option:nth-child(3) {
     margin-right: 0;
+  }
+  .bottom-buttons .question-option {
+    display: none;
   }
 }
 
