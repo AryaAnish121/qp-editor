@@ -27,6 +27,7 @@ const Questions = () => {
     term: "",
     studyingClass: "",
     subject: "",
+    schoolName: "",
   });
   const [exportJSON, setExportJSON] = useState("");
   const [focusedQuestion, setFocusedQuestion] = useState(null);
@@ -326,6 +327,16 @@ const Questions = () => {
   return (
     <div className="outer">
       <div className="main">
+        <div className="main-qdetail question-details">
+          <input
+            type="text"
+            placeholder="School Name"
+            className="question-option"
+            onChange={handleExamDetailsChange}
+            value={examDetails.schoolName}
+            name="schoolName"
+          />
+        </div>
         <div className="question-details">
           <input
             type="text"

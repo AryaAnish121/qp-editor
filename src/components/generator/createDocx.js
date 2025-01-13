@@ -9,7 +9,7 @@ import {
   TabStopType,
 } from "docx";
 
-const createDocx = (data, { studyingClass, subject, term }) => {
+const createDocx = (data, { studyingClass, subject, term, schoolName }) => {
   const questions = data.flatMap((question) => {
     const options =
       question.type === "mcq/fitb/mqna/mtf"
@@ -75,7 +75,7 @@ const createDocx = (data, { studyingClass, subject, term }) => {
         properties: {},
         children: [
           new Paragraph({
-            text: "St. Francis School, Majdiha",
+            text: schoolName,
             alignment: "center",
             style: "schoolNamePara",
           }),

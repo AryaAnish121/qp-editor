@@ -12,6 +12,14 @@
   width: 47.5%;
 }
 
+.main-qdetail.question-details {
+  margin-bottom: 12px;
+}
+
+.main-qdetail.question-details input {
+  width: 100%;
+}
+
 .question-details {
   width: 100%;
   display: flex;
