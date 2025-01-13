@@ -114,6 +114,10 @@ const createDocx = (
               }),
             ],
           }),
+          new Paragraph({
+            text: "",
+            style: "lineBreak",
+          }),
           ...questions,
           new Paragraph({
             text: "",

@@ -1,6 +1,6 @@
 {
-  "name": "qna-app",
-  "version": "0.1.0",
+  "name": "qp-editor",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.13.0",
