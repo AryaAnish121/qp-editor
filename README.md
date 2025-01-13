@@ -25,3 +25,12 @@
 | `ans`               | long/short answer                                                                                                 |
 | `adash`             | answer with lines                                                                                                 |
 | `mcq/fitb/mqna/mtf` | multiple choice question or fill in the blanks question or multiple qna question or match the following questions |
+
+### Keyboard Shortcut
+
+| Keyboard Shortcut | Description     |
+| ----------------- | --------------- |
+| shift enter       | New Quetsion    |
+| ctr d             | Delete Question |
+| ctrl shift enter  | New Option      |
+| ctrl shift d      | Delete Option   |

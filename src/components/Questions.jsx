@@ -14,9 +14,17 @@ import { useHotkeys } from "react-hotkeys-hook";
 import shortcuts from "./shortcuts";
 
 const Questions = () => {
+  const shortcutList = {
+    "shift enter": "New Quetsion",
+    "ctr d": "Delete Question",
+    "ctrl shift enter": "New Option",
+    "ctrl shift d": "Delete Option",
+  };
+
   const [questions, setQuestions] = useState([]);
   const qref = useRef([]);
   const oref = useRef([]);
+  const [openKeyboardModal, setKeyboardOpenModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [alert, setAlert] = useState({
     show: false,
@@ -26,7 +34,7 @@ const Questions = () => {
   const [examDetails, setExamDetails] = useState({
     term: "",
     studyingClass: "",
-    subject: "",
+    subject: "ST. ALPHONSA SCHOOL, Jhingajhal",
     schoolName: "",
   });
   const [exportJSON, setExportJSON] = useState("");
@@ -307,6 +315,14 @@ const Questions = () => {
     setOpenModal(false);
   };
 
+  const handleKeyboardModalOpen = () => {
+    setKeyboardOpenModal(true);
+  };
+
+  const handleKeyboardModalClose = () => {
+    setKeyboardOpenModal(false);
+  };
+
   const handleCopy = () => {
     navigator.clipboard.writeText(exportJSON);
     showSnackbar("Copied", "info", 2000);
@@ -405,6 +421,11 @@ const Questions = () => {
             Generate Docs
           </button>
         </div>
+        <div className="bottom-buttons">
+          <button onClick={handleKeyboardModalOpen} className="question-option">
+            Keybaord Shortcuts
+          </button>
+        </div>
         <Modal
           open={openModal}
           onClose={handleModalClose}
@@ -448,6 +469,26 @@ const Questions = () => {
                 </Box>
               }
             />
+          </Box>
+        </Modal>
+        <Modal
+          open={openKeyboardModal}
+          onClose={handleKeyboardModalClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          className="modal-outer modal-keyboard"
+        >
+          <Box className="box-modal">
+            <ul>
+              {Object.entries(shortcutList).map(([key, value]) => (
+                <li key={key} className="shortcut-list">
+                  <span>
+                    <kbd>{key}</kbd>
+                  </span>
+                  <span>{value}</span>
+                </li>
+              ))}
+            </ul>
           </Box>
         </Modal>
       </div>
