@@ -9,7 +9,11 @@ import {
   TabStopType,
 } from "docx";
 
-const createDocx = (data, { studyingClass, subject, term, schoolName }) => {
+const createDocx = (
+  data,
+  { studyingClass, subject, term, schoolName, language }
+) => {
+  console.log(language);
   const questions = data.flatMap((question) => {
     const options =
       question.type === "mcq/fitb/mqna/mtf"
@@ -91,7 +95,7 @@ const createDocx = (data, { studyingClass, subject, term, schoolName }) => {
           new Paragraph({
             children: [
               new TextRun({
-                text: "कक्षा: ",
+                text: language === "hindi" ? "कक्षा: " : "Class: ",
                 bold: true,
               }),
               new TextRun({
@@ -102,7 +106,7 @@ const createDocx = (data, { studyingClass, subject, term, schoolName }) => {
           new Paragraph({
             children: [
               new TextRun({
-                text: "विषय: ",
+                text: language === "hindi" ? "विषय: " : "Subject: ",
                 bold: true,
               }),
               new TextRun({
@@ -176,7 +180,7 @@ const createDocx = (data, { studyingClass, subject, term, schoolName }) => {
           },
           run: {
             size: 24,
-            font: "Mangal",
+            font: language === "hindi" ? "Mangal" : "Arial",
           },
         },
       },

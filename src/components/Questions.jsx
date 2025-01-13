@@ -12,6 +12,8 @@ import { Button } from "@mui/joy";
 import Snackbar from "@mui/material/Snackbar";
 import { useHotkeys } from "react-hotkeys-hook";
 import shortcuts from "./shortcuts";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 const Questions = () => {
   const shortcutList = {
@@ -34,8 +36,9 @@ const Questions = () => {
   const [examDetails, setExamDetails] = useState({
     term: "",
     studyingClass: "",
-    subject: "ST. ALPHONSA SCHOOL, Jhingajhal",
-    schoolName: "",
+    subject: "",
+    schoolName: "ST. ALPHONSA SCHOOL, Jhingajhal",
+    language: "english",
   });
   const [exportJSON, setExportJSON] = useState("");
   const [focusedQuestion, setFocusedQuestion] = useState(null);
@@ -422,6 +425,23 @@ const Questions = () => {
           </button>
         </div>
         <div className="bottom-buttons">
+          <ToggleButtonGroup
+            color="primary"
+            value={examDetails.language}
+            exclusive
+            onChange={(_, e) => {
+              if (e)
+                handleExamDetailsChange({
+                  target: {
+                    name: "language",
+                    value: e,
+                  },
+                });
+            }}
+          >
+            <ToggleButton value="hindi">Hindi</ToggleButton>
+            <ToggleButton value="english">Engligh</ToggleButton>
+          </ToggleButtonGroup>
           <button onClick={handleKeyboardModalOpen} className="question-option">
             Keybaord Shortcuts
           </button>
