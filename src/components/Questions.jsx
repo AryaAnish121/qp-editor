@@ -21,6 +21,7 @@ const Questions = () => {
     "ctr d": "Delete Question",
     "ctrl shift enter": "New Option",
     "ctrl shift d": "Delete Option",
+    tab: "Switch Between Feilds",
   };
 
   const [questions, setQuestions] = useState([]);
@@ -414,7 +415,7 @@ const Questions = () => {
         </div>
         <div className="add-question">
           <button className="question-option" onClick={handleModalOpen}>
-            Import/Export Data
+            Import / Export Data
           </button>
           <button className="question-option" onClick={clear}>
             Clear

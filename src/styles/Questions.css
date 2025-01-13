@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 25px 0;
+  padding-top: 25px;
 }
 
 .main {
@@ -122,6 +122,10 @@ kbd {
 
 .shortcut-list:nth-last-child(1) {
   margin-bottom: 0;
+}
+
+.bottom-buttons button {
+  overflow-y: hidden;
 }
 
 @media screen and (max-width: 500px) {

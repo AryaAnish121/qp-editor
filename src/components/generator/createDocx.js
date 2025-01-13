@@ -158,7 +158,10 @@ const createDocx = (
             },
             {
               level: 1,
-              format: LevelFormat.HINDI_VOWELS,
+              format:
+                language === "hindi"
+                  ? LevelFormat.HINDI_VOWELS
+                  : LevelFormat.LOWER_ROMAN,
               text: "(%2)",
               style: {
                 paragraph: {
