@@ -154,7 +154,7 @@ const Questions = () => {
   useHotkeys(
     shortcuts.deleteQuestion,
     (e) => {
-      if (focusedQuestion !== null || focusedQuestion !== undefined)
+      if (focusedQuestion !== null && focusedQuestion !== undefined)
         handleDeleteQuestion(focusedQuestion);
       e.preventDefault();
     },
@@ -164,7 +164,7 @@ const Questions = () => {
   useHotkeys(
     shortcuts.newOption,
     () => {
-      if (focusedQuestion !== null || focusedQuestion !== undefined) {
+      if (focusedQuestion !== null && focusedQuestion !== undefined) {
         if (questions[focusedQuestion]) {
           handleNewOption(focusedQuestion);
           handleMainChange(focusedQuestion, { type: "mcq/fitb/mqna/mtf" });
@@ -177,7 +177,7 @@ const Questions = () => {
   useHotkeys(
     shortcuts.deleteOption,
     (e) => {
-      if (focusedOption !== null || focusedOption !== undefined)
+      if (focusedOption !== null && focusedOption !== undefined)
         handleDeleteOption(focusedOption[0], focusedOption[1]);
       e.preventDefault();
     },
@@ -297,13 +297,15 @@ const Questions = () => {
   };
 
   const clear = () => {
-    if (window.confirm("Are you sure?") === false) return;
+    if (window.confirm("Are you sure you want to clear?") === false) return;
     localStorage.clear();
     setQuestions([]);
     setExamDetails({
       term: "",
       studyingClass: "",
       subject: "",
+      schoolName: "",
+      language: "english",
     });
     showSnackbar("Cleared", "info", 2000);
   };
@@ -439,8 +441,8 @@ const Questions = () => {
                 });
             }}
           >
-            <ToggleButton value="hindi">Hindi</ToggleButton>
             <ToggleButton value="english">Engligh</ToggleButton>
+            <ToggleButton value="hindi">Hindi</ToggleButton>
           </ToggleButtonGroup>
           <button onClick={handleKeyboardModalOpen} className="question-option">
             Keybaord Shortcuts

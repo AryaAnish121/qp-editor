@@ -90,7 +90,7 @@
 }
 
 .bottom-buttons {
-  position: absolute;
+  position: fixed;
   bottom: 35px;
   right: 35px;
   display: flex;
